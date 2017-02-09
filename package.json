@@ -1,0 +1,9 @@
+{
+  "name": "comprehensible",
+  "version": "1.0.0",
+  "description": "Converts numbers to phonetically/visuably easily distinguishable strings",
+  "main": "js/palatable.js",
+  "repository": "https://github.com/mplatt/comprehensible.git",
+  "author": "Moritz Platt <mplatt02@dcs.bbk.ac.uk>",
+  "license": "MIT"
+}
