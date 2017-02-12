@@ -7,6 +7,7 @@
   "author": "Moritz Platt <mplatt02@mail.bbk.ac.uk>",
   "license": "MIT",
   "scripts": {
+    "install": "tsc",
     "test": "tsc --project tsconfig-test.json && mocha js/test/**/*.js"
   },
   "devDependencies": {

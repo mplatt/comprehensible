@@ -3,3 +3,4 @@ jspm_packages/
 .npm
 .yarn-integrity
 .idea
+js/test/

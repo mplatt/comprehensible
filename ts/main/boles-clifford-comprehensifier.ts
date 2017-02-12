@@ -1,6 +1,7 @@
 import {Comprehensifier} from "./comprehensifier";
 
-// Boles, D.B. & Clifford, J.E. Behavior Research Methods, Instruments, & Computers (1989) 21: 579. doi:10.3758/BF03210580
+// The sub alphabets are modelled after letter similarity measures published in Boles, D.B. & Clifford, J.E.
+// Behavior Research Methods, Instruments, & Computers (1989) 21: 579. doi:10.3758/BF03210580
 export class BolesCliffordComprehensifier extends Comprehensifier {
 	private words: Array<string>;
 

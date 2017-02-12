@@ -38,7 +38,7 @@ export abstract class Comprehensifier {
 		let decoded = 0;
 
 		for (let word of this.split(message)) {
-			decoded = base * decoded + this.position(word)
+			decoded = base * decoded + this.position(word);
 		}
 
 		return decoded;
