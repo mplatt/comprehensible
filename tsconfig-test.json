@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "locale": "en-uk",
+    "target": "ES6",
+    "module": "CommonJS",
+    "newLine": "lf",
+    "preserveConstEnums": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "types": [
+      "chai",
+      "mocha",
+      "node"
+    ],
+    "outDir": "js/test"
+  },
+  "include": [
+    "ts/test/**/*"
+  ]
+}

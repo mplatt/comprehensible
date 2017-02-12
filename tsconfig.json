@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "locale": "en-uk",
+    "target": "ES6",
+    "module": "CommonJS",
+    "newLine": "lf",
+    "preserveConstEnums": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "types": [
+      "node"
+    ],
+    "outDir": "js/main"
+  },
+  "include": [
+    "ts/main/**/*"
+  ]
+}

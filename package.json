@@ -2,8 +2,19 @@
   "name": "comprehensible",
   "version": "1.0.0",
   "description": "Converts numbers to phonetically/visuably easily distinguishable strings",
-  "main": "js/palatable.js",
+  "main": "js/comprehensible.js",
   "repository": "https://github.com/mplatt/comprehensible.git",
-  "author": "Moritz Platt <mplatt02@dcs.bbk.ac.uk>",
-  "license": "MIT"
+  "author": "Moritz Platt <mplatt02@mail.bbk.ac.uk>",
+  "license": "MIT",
+  "scripts": {
+    "test": "tsc --project tsconfig-test.json && mocha js/test/**/*.js"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "typescript": "^2.1.6"
+  }
 }
