@@ -2,10 +2,13 @@ import {Comprehensifier} from "./comprehensifier";
 
 export class DictionaryComprehensifier extends Comprehensifier {
 	private words: Array<string>;
-
 	constructor(words: Array<string>) {
 		super();
 		this.words = DictionaryComprehensifier.ensureUniqueness(words);
+	}
+
+	split(message: string): Array<string> {
+		return message.split(" ");
 	}
 
 	join(words: Array<string>): string {
