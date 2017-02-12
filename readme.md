@@ -7,3 +7,7 @@ Roadmap
 -------
 
  - Markov
+ - visual
+    - Alphanum
+    - pick your character class
+ - Phonetic

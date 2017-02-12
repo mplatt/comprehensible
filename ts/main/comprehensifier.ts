@@ -1,11 +1,13 @@
 export abstract class Comprehensifier {
 	comprehensify(message: number): string {
 		Comprehensifier.ensurePositiveInt(message);
+		Comprehensifier.ensureDictionarylength(this.getWords());
 		return this.toDigits(message);
 	}
 
 	uncomprehensify(message: string): number {
 		Comprehensifier.ensureValidMessage(message);
+		Comprehensifier.ensureDictionarylength(this.getWords());
 		return this.fromDigits(message);
 	}
 
@@ -16,8 +18,6 @@ export abstract class Comprehensifier {
 	abstract join(words: Array<string>): string
 
 	private toDigits(dec: number): string {
-		this.ensureDictionaylength();
-
 		const base = this.getWords().length;
 		let encoded: Array<string> = [];
 
@@ -34,8 +34,6 @@ export abstract class Comprehensifier {
 	}
 
 	private fromDigits(message: string): number {
-		this.ensureDictionaylength();
-
 		const base = this.getWords().length;
 		let decoded = 0;
 
@@ -50,13 +48,13 @@ export abstract class Comprehensifier {
 		return this.getWords().indexOf(word);
 	}
 
-	private ensureDictionaylength() {
-		if (this.getWords().length < 2) {
-			throw new Error(`Invalid dictionary provided: ${this.getWords()}`);
+	private static ensureDictionarylength(words: Array<string>) {
+		if (words.length < 2) {
+			throw new Error(`Invalid dictionary provided: ${words}`);
 		}
 	}
 
-	static ensurePositiveInt(num: number) {
+	private static ensurePositiveInt(num: number) {
 		if (!Number.isInteger(num)) {
 			throw new Error("Non-integer number provided");
 		}
