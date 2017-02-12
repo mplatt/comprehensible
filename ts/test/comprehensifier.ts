@@ -14,6 +14,19 @@ describe("Comprehensifier", () => {
 		expect(comprehensifier.comprehensify(40)).to.equal("40");
 		expect(comprehensifier.comprehensify(41)).to.equal("1:0");
 	});
+
+	it("should decode from binary base", () => {
+		const comprehensifier = new BinaryComprehensifier();
+		expect(comprehensifier.uncomprehensify((0).toString(2))).to.equal(0);
+		expect(comprehensifier.uncomprehensify((1337).toString(2))).to.equal(1337);
+	});
+
+	it("should encode to large base", () => {
+		const comprehensifier = new LargeBaseComprehensifier();
+		expect(comprehensifier.uncomprehensify("0")).to.equal(0);
+		expect(comprehensifier.uncomprehensify("40")).to.equal(40);
+		expect(comprehensifier.uncomprehensify("1:0")).to.equal(41);
+	});
 });
 
 class BinaryComprehensifier extends Comprehensifier {
