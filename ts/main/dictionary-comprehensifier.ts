@@ -5,7 +5,7 @@ export class DictionaryComprehensifier extends Comprehensifier {
 
 	constructor(words: Array<string>) {
 		super();
-		this.words = words;
+		this.words = DictionaryComprehensifier.ensureUniqueness(words);
 	}
 
 	join(words: Array<string>): string {
@@ -14,5 +14,9 @@ export class DictionaryComprehensifier extends Comprehensifier {
 
 	getWords(): Array<string> {
 		return this.words;
+	}
+
+	private static ensureUniqueness(words: Array<string>): Array<string> {
+		return [...new Set(words)];
 	}
 }
