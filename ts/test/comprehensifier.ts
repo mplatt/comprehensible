@@ -17,20 +17,18 @@ describe("Comprehensifier", () => {
 });
 
 class BinaryComprehensifier extends Comprehensifier {
-	words: Array<string>;
+	getWords(): Array<string> {
+		return ["0", "1"];
+	}
 
-	constructor() {
-		super();
-		this.words = ["0", "1"];
+	join(words: Array<string>): string {
+		return words.join("");
 	}
 }
 
 class LargeBaseComprehensifier extends Comprehensifier {
-	words: Array<string>;
-
-	constructor() {
-		super();
-		this.words = [
+	getWords(): Array<string> {
+		return [
 			"0:",
 			"1:",
 			"2:",
@@ -73,5 +71,9 @@ class LargeBaseComprehensifier extends Comprehensifier {
 			"39:",
 			"40:"
 		];
+	}
+
+	join(words: Array<string>): string {
+		return words.join("");
 	}
 }

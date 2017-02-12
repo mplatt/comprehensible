@@ -1,23 +1,25 @@
 export abstract class Comprehensifier {
-	abstract words: Array<string>;
-
 	comprehensify(message: number): string {
 		Comprehensifier.ensurePositiveInt(message);
 		return this.baseShift(message);
 	}
 
+	abstract getWords(): Array<string>
+
+	abstract join(words: Array<string>): string
+
 	private baseShift(dec: number): string {
 		this.ensureDictionaylength();
 
-		const base = this.words.length;
+		const base = this.getWords().length;
 		let encoded: Array<string> = [];
 
 		if (dec === 0) {
-			return this.words[0];
+			return this.getWords()[0];
 		}
 
 		while (dec > 0) {
-			encoded.unshift(this.words[dec % base]);
+			encoded.unshift(this.getWords()[dec % base]);
 			dec = (dec - (dec % base)) / base;
 		}
 
@@ -25,17 +27,13 @@ export abstract class Comprehensifier {
 	}
 
 	private ensureDictionaylength() {
-		if (this.words.length < 2) {
-			throw new Error(`Invalid dictionary provided: ${this.words}`);
+		if (this.getWords().length < 2) {
+			throw new Error(`Invalid dictionary provided: ${this.getWords()}`);
 		}
 	}
 
-	private join(words: Array<string>): string {
-		return words.join("");
-	}
-
 	static ensurePositiveInt(num: number) {
-		if (! Number.isInteger(num)) {
+		if (!Number.isInteger(num)) {
 			throw new Error("Non-integer number provided");
 		}
 
