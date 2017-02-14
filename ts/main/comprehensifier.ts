@@ -1,14 +1,13 @@
 export abstract class Comprehensifier {
-	comprehensify(message: number): string {
-		Comprehensifier.ensurePositiveInt(message);
+	comprehensify(message: Uint8Array): string {
 		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.toDigits(message);
+		return this.join(this.toDigits(message));
 	}
 
-	uncomprehensify(message: string): number {
+	uncomprehensify(message: string): Uint8Array {
 		Comprehensifier.ensureValidMessage(message);
 		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.fromDigits(message);
+		return this.fromDigits(this.split(message));
 	}
 
 	abstract getWords(): Array<string>
@@ -17,50 +16,39 @@ export abstract class Comprehensifier {
 
 	abstract join(words: Array<string>): string
 
-	private toDigits(dec: number): string {
-		const base = this.getWords().length;
-		let encoded: Array<string> = [];
+	private toDigits(data: Uint8Array): Array<string> {
+		const sourceLength = this.getWords().length;
+		let destinationLength = 0;
+		const numberLength = data.length;
 
-		if (dec === 0) {
-			return this.getWords()[0];
+		for (let i = 0; i < numberLength; i++) {
+			destinationLength = destinationLength * Math.pow(2, 8) + data[i];
 		}
 
-		while (dec > 0) {
-			encoded.unshift(this.getWords()[dec % base]);
-			dec = (dec - (dec % base)) / base;
+		if (destinationLength < 0) {
+			return [];
 		}
 
-		return this.join(encoded);
+		let r = destinationLength % sourceLength;
+		const c = [this.getWords()[r]];
+		let q = Math.floor(destinationLength / sourceLength);
+
+		while (q) {
+			r = q % sourceLength;
+			q = Math.floor(q / sourceLength);
+			c.unshift(this.getWords()[r]);
+		}
+
+		return c;
 	}
 
-	private fromDigits(message: string): number {
-		const base = this.getWords().length;
-		let decoded = 0;
-
-		for (let word of this.split(message)) {
-			decoded = base * decoded + this.position(word);
-		}
-
-		return decoded;
-	}
-
-	private position(word: string): number {
-		return this.getWords().indexOf(word);
+	private fromDigits(data: Array<string>): Uint8Array {
+		return undefined;
 	}
 
 	private static ensureDictionarylength(words: Array<string>) {
 		if (words.length < 2) {
 			throw new Error(`Invalid dictionary provided: ${words}`);
-		}
-	}
-
-	private static ensurePositiveInt(num: number) {
-		if (!Number.isInteger(num)) {
-			throw new Error("Non-integer number provided");
-		}
-
-		if (num < 0) {
-			throw new Error("Negative number provided");
 		}
 	}
 

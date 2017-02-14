@@ -16,3 +16,10 @@ Roadmap
     - Alphanum
     - pick your character class
  - Phonetic
+
+Interfaces
+----------
+ - UUID
+ - int
+ - arbitrary data
+ - base64
