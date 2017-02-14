@@ -10,7 +10,8 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "types": [
-      "node"
+      "node",
+      "big-integer"
     ],
     "outDir": "js/main"
   },

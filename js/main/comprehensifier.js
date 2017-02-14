@@ -1,49 +1,40 @@
 "use strict";
 class Comprehensifier {
     comprehensify(message) {
-        Comprehensifier.ensurePositiveInt(message);
         Comprehensifier.ensureDictionarylength(this.getWords());
-        return this.toDigits(message);
+        return this.join(this.toDigits(message));
     }
     uncomprehensify(message) {
         Comprehensifier.ensureValidMessage(message);
         Comprehensifier.ensureDictionarylength(this.getWords());
-        return this.fromDigits(message);
+        return this.fromDigits(this.split(message));
     }
-    toDigits(dec) {
-        const base = this.getWords().length;
-        let encoded = [];
-        if (dec === 0) {
-            return this.getWords()[0];
+    toDigits(data) {
+        const sourceLength = this.getWords().length;
+        let destinationLength = 0;
+        const numberLength = data.length;
+        for (let i = 0; i < numberLength; i++) {
+            destinationLength = destinationLength * Math.pow(2, 8) + data[i];
         }
-        while (dec > 0) {
-            encoded.unshift(this.getWords()[dec % base]);
-            dec = (dec - (dec % base)) / base;
+        if (destinationLength < 0) {
+            return [];
         }
-        return this.join(encoded);
+        let r = destinationLength % sourceLength;
+        const c = [this.getWords()[r]];
+        let q = Math.floor(destinationLength / sourceLength);
+        while (q) {
+            r = q % sourceLength;
+            q = Math.floor(q / sourceLength);
+            c.unshift(this.getWords()[r]);
+        }
+        return c;
     }
-    fromDigits(message) {
-        const base = this.getWords().length;
-        let decoded = 0;
-        for (let word of this.split(message)) {
-            decoded = base * decoded + this.position(word);
-        }
-        return decoded;
-    }
-    position(word) {
-        return this.getWords().indexOf(word);
+    fromDigits(data) {
+        return undefined;
     }
     static ensureDictionarylength(words) {
         if (words.length < 2) {
             throw new Error(`Invalid dictionary provided: ${words}`);
-        }
-    }
-    static ensurePositiveInt(num) {
-        if (!Number.isInteger(num)) {
-            throw new Error("Non-integer number provided");
-        }
-        if (num < 0) {
-            throw new Error("Negative number provided");
         }
     }
     static ensureValidMessage(message) {

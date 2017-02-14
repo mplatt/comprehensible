@@ -16,34 +16,42 @@ export abstract class Comprehensifier {
 
 	abstract join(words: Array<string>): string
 
-	private toDigits(data: Uint8Array): Array<string> {
-		const sourceLength = this.getWords().length;
-		let destinationLength = 0;
-		const numberLength = data.length;
+	private toDigits(data: BigInteger): Array<string> {
+		const base = this.getWords().length;
+		let r = data.mod(base);
+		const result = [this.getWords()[r.toJSNumber()]];
+		let q = data.divide(base);
 
-		for (let i = 0; i < numberLength; i++) {
-			destinationLength = destinationLength * Math.pow(2, 8) + data[i];
+		while (!q.equals(0)) {
+			r = q.mod(base);
+			q = q.divide(base);
+			result.unshift(this.getWords()[r.toJSNumber()])
 		}
-
-		if (destinationLength < 0) {
-			return [];
-		}
-
-		let r = destinationLength % sourceLength;
-		const c = [this.getWords()[r]];
-		let q = Math.floor(destinationLength / sourceLength);
-
-		while (q) {
-			r = q % sourceLength;
-			q = Math.floor(q / sourceLength);
-			c.unshift(this.getWords()[r]);
-		}
-
-		return c;
+		return result;
 	}
 
-	private fromDigits(data: Array<string>): Uint8Array {
-		return undefined;
+	private fromDigits(data: Array<string>): BigInteger {
+		let value = bigInt(0);
+
+		for (let word in data) {
+			value = value.multiply(this.getWords().length).add(this.getWords().indexOf(word));
+		}
+
+		if (value.lesser(0)) {
+			return bigInt(0);
+		}
+
+		let r = value.mod(10);
+		let result = r;
+		let q = value.divide(10);
+
+		while(!q.equals(0)) {
+			r = q.mod(10);
+			q = q.divide(10);
+			result = result.plus(r)
+		}
+
+		return result;
 	}
 
 	private static ensureDictionarylength(words: Array<string>) {

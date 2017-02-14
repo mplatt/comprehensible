@@ -12,7 +12,8 @@
     "types": [
       "chai",
       "mocha",
-      "node"
+      "node",
+      "big-integer"
     ],
     "outDir": "js/test"
   },

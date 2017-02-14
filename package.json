@@ -17,5 +17,9 @@
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "typescript": "^2.1.6"
+  },
+  "dependencies": {
+    "@types/big-integer": "^0.0.29",
+    "big-integer": "^1.6.17"
   }
 }

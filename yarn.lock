@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/big-integer@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/big-integer/-/big-integer-0.0.29.tgz#bdfaf2fe8dda31f28bab4bf42aed288877722fb3"
+
 "@types/chai@^3.4.34":
   version "3.4.34"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-3.4.34.tgz#d5335792823bb09cddd5e38c3d211b709183854d"
@@ -21,6 +25,10 @@ assertion-error@^1.0.1:
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
+
+big-integer@^1.6.17:
+  version "1.6.17"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.17.tgz#f0dcf5109a949e42a993ee3e8fb2070452817b51"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
