@@ -1,3 +1,5 @@
+const bigInt = require("big-integer");
+
 export abstract class Comprehensifier {
 	comprehensify(message: Uint8Array): string {
 		Comprehensifier.ensureDictionarylength(this.getWords());
@@ -25,34 +27,20 @@ export abstract class Comprehensifier {
 		while (!q.equals(0)) {
 			r = q.mod(base);
 			q = q.divide(base);
-			result.unshift(dictionary[r.toJSNumber()])
+			result.unshift(dictionary[r.toJSNumber()]);
 		}
 		return result;
 	}
 
 	private fromDigits(data: Array<string>, dictionary: Array<string> = this.getWords()): BigInteger {
-		let value = bigInt.zero;
+		let value = bigInt(0);
 
-		for (let word in data) {
-			value = value.multiply(dictionary.length).add(dictionary.indexOf(word));
+		for (let word of data.reverse().entries()) {
+			let x = bigInt(dictionary.indexOf(word[1])).times(bigInt(dictionary.length).pow(word[0]));
+			value = value.plus(x);
 		}
 
-		if (value.lesser(0)) {
-			return bigInt.zero;
-		}
-
-		let r = value.mod(10);
-		let result = r;
-		let q = value.divide(10);
-
-		while (!q.equals(0)) {
-			let d = q.divmod(10);
-			r = d.remainder;
-			q = d.quotient;
-			result = result.plus(r)
-		}
-
-		return result;
+		return value;
 	}
 
 	private static ensureDictionarylength(words: Array<string>) {
@@ -69,13 +57,27 @@ export abstract class Comprehensifier {
 
 	private static toBigInteger(message: Uint8Array): BigInteger {
 		let hex = Array.from(message).map(function (value) {
-			return value.toString(16);
+			let s = value.toString(16);
+			return (s.length === 2) ? s : `0${s}`;
 		}).join("");
-
 		return bigInt(hex, 16);
 	}
 
-	private static fromBigInteger(number: BigInteger): Uint8Array {
-		return undefined;
+	private static fromBigInteger(message: BigInteger): Uint8Array {
+		if (message.lesser(0)) {
+			return bigInt.zero;
+		}
+
+		let r = message.mod(256).toJSNumber();
+		let result = [r];
+		let q = message.divide(256);
+
+		while (!q.equals(0)) {
+			let d = q.divmod(256);
+			q = d.quotient;
+			result.unshift(d.remainder.toJSNumber());
+		}
+
+		return Uint8Array.from(result);
 	}
 }
