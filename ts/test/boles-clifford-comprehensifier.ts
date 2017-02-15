@@ -4,14 +4,14 @@ import {BolesCliffordComprehensifier} from "../main/boles-clifford-comprehensifi
 // describe("Visual Comprehensifier", () => {
 // 	it("should encode longer message", () => {
 // 		const comprehensifier = new BolesCliffordComprehensifier(0);
-// 		expect(comprehensifier.comprehensify(199399426)).to.equal("Bogus");
-// 		expect(comprehensifier.uncomprehensify("Bogus")).to.equal(199399426);
+// 		expect(comprehensifier.comprehensifyUint8Array(199399426)).to.equal("Bogus");
+// 		expect(comprehensifier.uncomprehensifyUint8Array("Bogus")).to.equal(199399426);
 // 	});
 //
 // 	it("should encode using the whole available range for 0 distance", () => {
 // 		const comprehensifier = new BolesCliffordComprehensifier(0);
-// 		expect(comprehensifier.comprehensify(51)).to.equal("Z");
-// 		expect(comprehensifier.uncomprehensify("Z")).to.equal(51);
+// 		expect(comprehensifier.comprehensifyUint8Array(51)).to.equal("Z");
+// 		expect(comprehensifier.uncomprehensifyUint8Array("Z")).to.equal(51);
 // 	});
 //
 // 	it("should use the proper alphabet for distance 0", () => {

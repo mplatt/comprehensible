@@ -1,15 +1,31 @@
 const bigInt = require("big-integer");
 
 export abstract class Comprehensifier {
-	comprehensify(message: Uint8Array): string {
+	public comprehensifyUint8Array(message: Uint8Array): string {
 		Comprehensifier.ensureDictionarylength(this.getWords());
 		return this.join(this.toDigits(Comprehensifier.toBigInteger(message)));
 	}
 
-	uncomprehensify(message: string): Uint8Array {
+	public comprehensifyNumber(message: number): string {
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return this.join(this.toDigits(bigInt(message)));
+	}
+
+	public comprehensifyUUID(message: string): string {
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return this.join(this.toDigits(Comprehensifier.uuidToNumber(message)));
+	}
+
+	public uncomprehensifyUint8Array(message: string): Uint8Array {
 		Comprehensifier.ensureValidMessage(message);
 		Comprehensifier.ensureDictionarylength(this.getWords());
 		return Comprehensifier.fromBigInteger(this.fromDigits(this.split(message)));
+	}
+
+	public uncomprehensifyNumber(message: string): number {
+		Comprehensifier.ensureValidMessage(message);
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return this.fromDigits(this.split(message)).toJSNumber();
 	}
 
 	abstract getWords(): Array<string>
@@ -79,5 +95,9 @@ export abstract class Comprehensifier {
 		}
 
 		return Uint8Array.from(result);
+	}
+
+	private static uuidToNumber(message: string): BigInteger {
+		return bigInt(message.replace(/[^A-Fa-f0-9]/g, ""));
 	}
 }

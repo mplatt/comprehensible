@@ -1,14 +1,27 @@
 "use strict";
 const bigInt = require("big-integer");
 class Comprehensifier {
-    comprehensify(message) {
+    comprehensifyUint8Array(message) {
         Comprehensifier.ensureDictionarylength(this.getWords());
         return this.join(this.toDigits(Comprehensifier.toBigInteger(message)));
     }
-    uncomprehensify(message) {
+    comprehensifyNumber(message) {
+        Comprehensifier.ensureDictionarylength(this.getWords());
+        return this.join(this.toDigits(bigInt(message)));
+    }
+    comprehensifyUUID(message) {
+        Comprehensifier.ensureDictionarylength(this.getWords());
+        return this.join(this.toDigits(Comprehensifier.uuidToNumber(message)));
+    }
+    uncomprehensifyUint8Array(message) {
         Comprehensifier.ensureValidMessage(message);
         Comprehensifier.ensureDictionarylength(this.getWords());
         return Comprehensifier.fromBigInteger(this.fromDigits(this.split(message)));
+    }
+    uncomprehensifyNumber(message) {
+        Comprehensifier.ensureValidMessage(message);
+        Comprehensifier.ensureDictionarylength(this.getWords());
+        return this.fromDigits(this.split(message)).toJSNumber();
     }
     toDigits(data, dictionary = this.getWords()) {
         const base = dictionary.length;
@@ -60,6 +73,9 @@ class Comprehensifier {
             result.unshift(d.remainder.toJSNumber());
         }
         return Uint8Array.from(result);
+    }
+    static uuidToNumber(message) {
+        return bigInt(message.replace(/[^A-Fa-f0-9]/g, ""));
     }
 }
 exports.Comprehensifier = Comprehensifier;
