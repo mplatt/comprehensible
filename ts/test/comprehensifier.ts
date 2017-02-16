@@ -66,8 +66,8 @@ describe("Comprehensifier working with number data", () => {
 		expect(comprehensifier.comprehensifyNumber(1337)).to.equal("32:25");
 		expect(comprehensifier.uncomprehensifyNumber("32:25")).to.equal(1337);
 
-		expect(comprehensifier.comprehensifyNumber(9007199254740991)).to.equal("27:21:1:1:35:14:3:3:15:32");
-		expect(comprehensifier.uncomprehensifyNumber("27:21:1:1:35:14:3:3:15:32")).to.equal(9007199254740991);
+		expect(comprehensifier.comprehensifyNumber(9007199254740991)).to.equal("27:21:1:1:35:13:3:3:15:32");
+		expect(comprehensifier.uncomprehensifyNumber("27:21:1:1:35:13:3:3:15:32")).to.equal(9007199254740991);
 	});
 });
 
@@ -117,7 +117,7 @@ class LargeBaseComprehensifier extends Comprehensifier {
 			"10",
 			"11",
 			"12",
-			"14",
+			"13",
 			"14",
 			"15",
 			"16",
