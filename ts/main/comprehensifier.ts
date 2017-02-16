@@ -1,31 +1,37 @@
 const bigInt = require("big-integer");
 
 export abstract class Comprehensifier {
-	public comprehensifyUint8Array(message: Uint8Array): string {
-		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.join(this.toDigits(Comprehensifier.toBigInteger(message)));
-	}
-
 	public comprehensifyNumber(message: number): string {
 		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.join(this.toDigits(bigInt(message)));
-	}
-
-	public comprehensifyUUID(message: string): string {
-		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.join(this.toDigits(Comprehensifier.uuidToNumber(message)));
-	}
-
-	public uncomprehensifyUint8Array(message: string): Uint8Array {
-		Comprehensifier.ensureValidMessage(message);
-		Comprehensifier.ensureDictionarylength(this.getWords());
-		return Comprehensifier.fromBigInteger(this.fromDigits(this.split(message)));
+		return this.join(Comprehensifier.toDigits(bigInt(message), this.getWords()));
 	}
 
 	public uncomprehensifyNumber(message: string): number {
 		Comprehensifier.ensureValidMessage(message);
 		Comprehensifier.ensureDictionarylength(this.getWords());
-		return this.fromDigits(this.split(message)).toJSNumber();
+		return this.fromDigits(this.split(message), this.getWords()).toJSNumber();
+	}
+
+	public comprehensifyUUID(message: string): string {
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return this.join(Comprehensifier.toDigits(Comprehensifier.uuidToBigInteger(message), this.getWords()));
+	}
+
+	public uncomprehensifyUUID(message: string): string {
+		Comprehensifier.ensureValidMessage(message);
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return Comprehensifier.bigIntegerToUUID(this.fromDigits(this.split(message), this.getWords()));
+	}
+
+	public comprehensifyUint8Array(message: Uint8Array): string {
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return this.join(Comprehensifier.toDigits(Comprehensifier.uint8ArraytoBigInteger(message), this.getWords()));
+	}
+
+	public uncomprehensifyUint8Array(message: string): Uint8Array {
+		Comprehensifier.ensureValidMessage(message);
+		Comprehensifier.ensureDictionarylength(this.getWords());
+		return Comprehensifier.bigIntegerToUint8Array(this.fromDigits(this.split(message), this.getWords()));
 	}
 
 	abstract getWords(): Array<string>
@@ -34,7 +40,7 @@ export abstract class Comprehensifier {
 
 	abstract join(words: Array<string>): string
 
-	private toDigits(data: BigInteger, dictionary: Array<string> = this.getWords()): Array<string> {
+	private static toDigits(data: BigInteger, dictionary: Array<string>): Array<string> {
 		const base = dictionary.length;
 		let r = data.mod(base);
 		const result = [dictionary[r.toJSNumber()]];
@@ -48,7 +54,7 @@ export abstract class Comprehensifier {
 		return result;
 	}
 
-	private fromDigits(data: Array<string>, dictionary: Array<string> = this.getWords()): BigInteger {
+	private fromDigits(data: Array<string>, dictionary: Array<string>): BigInteger {
 		let value = bigInt(0);
 
 		for (let word of data.reverse().entries()) {
@@ -71,17 +77,17 @@ export abstract class Comprehensifier {
 		}
 	}
 
-	private static toBigInteger(message: Uint8Array): BigInteger {
+	private static uint8ArraytoBigInteger(message: Uint8Array): BigInteger {
 		let hex = Array.from(message).map(function (value) {
 			let s = value.toString(16);
-			return (s.length === 2) ? s : `0${s}`;
+			return Comprehensifier.pad(s, 2);
 		}).join("");
 		return bigInt(hex, 16);
 	}
 
-	private static fromBigInteger(message: BigInteger): Uint8Array {
+	private static bigIntegerToUint8Array(message: BigInteger): Uint8Array {
 		if (message.lesser(0)) {
-			return bigInt.zero;
+			throw new Error(`Invalid message provided: ${message.toString()}`);
 		}
 
 		let r = message.mod(256).toJSNumber();
@@ -97,7 +103,25 @@ export abstract class Comprehensifier {
 		return Uint8Array.from(result);
 	}
 
-	private static uuidToNumber(message: string): BigInteger {
-		return bigInt(message.replace(/[^A-Fa-f0-9]/g, ""));
+	private static uuidToBigInteger(message: string): BigInteger {
+		if (message.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i) === null) {
+			throw new Error(`Invalid UUID provided: ${message}`);
+		}
+
+		return bigInt(message.replace(/[^A-Fa-f0-9]/g, ""), 16);
+	}
+
+	private static bigIntegerToUUID(message: BigInteger): string {
+		if (message.lesser(0) || message.greater(bigInt("f".repeat(32), 16))) {
+			throw new Error(`Can't convert message ${message} to UUID`);
+		}
+
+		const hexString = Comprehensifier.pad(Comprehensifier.toDigits(message, "0123456789abcdef".split("")).join(""), 32);
+		const uuid = hexString.match(/(.{8})(.{4})(.{4})(.{4})(.{12})/);
+		return `${uuid[1]}-${uuid[2]}-${uuid[3]}-${uuid[4]}-${uuid[5]}`;
+	}
+
+	private static pad(value: string, length: number, padding: string = "0"): string {
+		return (value.length < length) ? Comprehensifier.pad(`${padding}${value}`, length, padding) : value;
 	}
 }
