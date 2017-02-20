@@ -1,6 +1,6 @@
 {
   "name": "comprehensible",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Converts numbers to phonetically/visuably easily distinguishable strings",
   "main": "js/main/comprehensible.js",
   "repository": "https://github.com/mplatt/comprehensible.git",
@@ -10,6 +10,7 @@
     "test": "tsc --project tsconfig-test.json && mocha js/test/**/*.js"
   },
   "devDependencies": {
+    "@types/big-integer": "^0.0.29",
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
@@ -18,7 +19,6 @@
     "typescript": "^2.1.6"
   },
   "dependencies": {
-    "@types/big-integer": "^0.0.29",
     "big-integer": "^1.6.17"
   }
 }
