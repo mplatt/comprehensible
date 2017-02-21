@@ -1,6 +1,6 @@
 {
   "name": "comprehensible",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Converts numbers to phonetically/visuably easily distinguishable strings",
   "main": "js/main/comprehensible.js",
   "repository": "https://github.com/mplatt/comprehensible.git",
