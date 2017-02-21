@@ -33,6 +33,10 @@ A function using the findings of Boles and Clifford [^1] to represent data in a 
 
 E.g.: Represents `f81d4fae-7dec-11d0-a765-00a0c91e6bf6` as `fRAQVvVQubOeofxSpyopWuM`.
 
+### Markov Comprehensifier
+
+A function representing data as random words, generated using a [Markov chain](http://en.wikipedia.org/wiki/Markov_chain) based on a corpus provided.
+
 Usage
 -----
 
@@ -80,13 +84,33 @@ console.log(dictionaryComprehensifier.comprehensifyUint8Array(Uint8Array.of(222)
 
 console.log(dictionaryComprehensifier.uncomprehensifyUint8Array("Art Decision"));
 // Uint8Array [ 222 ]
+
+const dummyCorpus = "Sun Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto Ceres Pallas Vesta Hygiea Interamnia Europa Davida Sylvia Cybele Eunomia Juno Euphrosyne Hektor Thisbe Bamberga Patientia Herculina Doris Ursula Camilla Eugenia Iris Amphitrite".toLowerCase().split(" ");
+const markovComprehensifier = comprehensible.markovComprehensifier(dummyCorpus);
+
+console.log(markovComprehensifier.comprehensifyNumber(777));
+// Tuneptunomia Nomillas
+
+console.log(markovComprehensifier.uncomprehensifyNumber("Tuneptunomia Nomillas"));
+// 777
+
+console.log(markovComprehensifier.comprehensifyUUID("f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
+// Millas Rthisbercursulas Rsulas Tuneptunomia Las Uropatia Pturosylvidavia Rthisbele Oritrisbele Atunepturosylvia Hisberculintientia Isbele Isberga Ugenterga Eresta Ropatursunomillas Urn Upiteranus Rthisbercursulas Irisbele
+
+console.log(markovComprehensifier.uncomprehensifyUUID("Millas Rthisbercursulas Rsulas Tuneptunomia Las Uropatia Pturosylvidavia Rthisbele Oritrisbele Atunepturosylvia Hisberculintientia Isbele Isberga Ugenterga Eresta Ropatursunomillas Urn Upiteranus Rthisbercursulas Irisbele"));
+// f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+
+console.log(markovComprehensifier.comprehensifyUint8Array(Uint8Array.of(222)));
+// Arsunomillas Teramberculas
+
+console.log(markovComprehensifier.uncomprehensifyUint8Array("Arsunomillas Teramberculas"));
+// Uint8Array [ 222 ]
 ```
 
 Roadmap
 -------
 
  - More meaningful error messages.
- - Implement a _Markov Word Generator_ or use [an existing library](http://max.marrone.nyc/Markov-Word-Generator/) to generate dictionaries of arbitrary length/complexity.
  - Extend visual comprehensifiers to to a bigger character pool (e.g. alphanumeric). 
  - Build a character pool for phonetically easily distinguishable _characters_.
 
