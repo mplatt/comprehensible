@@ -3,11 +3,11 @@ import {DictionaryComprehensifier} from "./dictionary-comprehensifier";
 
 class Comprehensible {
 	static bolesCliffordComprehensifier(distance: number = 10): BolesCliffordComprehensifier {
-		return new BolesCliffordComprehensifier(distance)
+		return new BolesCliffordComprehensifier(distance);
 	}
 
 	static dictionaryComprehensifier(words: Array<string>): DictionaryComprehensifier {
-		return new DictionaryComprehensifier(words)
+		return new DictionaryComprehensifier(words);
 	}
 }
 

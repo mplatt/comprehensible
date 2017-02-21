@@ -11,7 +11,8 @@
     "noImplicitThis": true,
     "types": [
       "node",
-      "big-integer"
+      "big-integer",
+      "random-seed"
     ],
     "outDir": "js/main"
   },
