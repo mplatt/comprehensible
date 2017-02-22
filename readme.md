@@ -113,7 +113,7 @@ Roadmap
  - More meaningful error messages.
  - Extend visual comprehensifiers to to a bigger character pool (e.g. alphanumeric). 
  - Build a character pool for phonetically easily distinguishable _characters_.
- - Implement [Bubble Babble Binary Data Encoding]()http://wiki.yak.net/589/Bubble_Babble_Encoding.txt)
+ - Implement [Bubble Babble Binary Data Encoding](http://wiki.yak.net/589/Bubble_Babble_Encoding.txt)
 
 References
 ----------
