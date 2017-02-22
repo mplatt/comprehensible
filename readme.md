@@ -29,7 +29,7 @@ E.g.: Represents `11d0a76500a0c91e6bf6` as `Cause Chance Amount Be Substance Sub
 
 ### Boles/Clifford Comprehensifier
 
-A function using the findings of Boles and Clifford [^1] to represent data in a visually less ambiguous form using a subset of the Latin alphabet.
+A function using the findings of Boles and Clifford <sup name="a1">[1](#f1)</sup> to represent data in a visually less ambiguous form using a subset of the Latin alphabet.
 
 E.g.: Represents `f81d4fae-7dec-11d0-a765-00a0c91e6bf6` as `fRAQVvVQubOeofxSpyopWuM`.
 
@@ -113,6 +113,6 @@ Roadmap
  - More meaningful error messages.
  - Extend visual comprehensifiers to to a bigger character pool (e.g. alphanumeric). 
  - Build a character pool for phonetically easily distinguishable _characters_.
+ - Implement [Bubble Babble Binary Data Encoding]()http://wiki.yak.net/589/Bubble_Babble_Encoding.txt)
 
-
-[^1]: Boles, D.B. & Clifford, J.E. Behavior Research Methods, Instruments, & Computers (1989) 21: 579. doi:10.3758/BF03210580
+<strong id="f1">1</strong>: Boles, D.B. & Clifford, J.E. Behavior Research Methods, Instruments, & Computers (1989) 21: 579. doi:10.3758/BF03210580
