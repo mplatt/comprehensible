@@ -115,4 +115,7 @@ Roadmap
  - Build a character pool for phonetically easily distinguishable _characters_.
  - Implement [Bubble Babble Binary Data Encoding]()http://wiki.yak.net/589/Bubble_Babble_Encoding.txt)
 
+References
+----------
+
 <strong id="f1">1</strong>: Boles, D.B. & Clifford, J.E. Behavior Research Methods, Instruments, & Computers (1989) 21: 579. doi:10.3758/BF03210580
